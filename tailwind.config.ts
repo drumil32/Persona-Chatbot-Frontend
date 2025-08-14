@@ -52,6 +52,12 @@ export default {
 					DEFAULT: 'hsl(var(--card))',
 					foreground: 'hsl(var(--card-foreground))'
 				},
+				'chat-background': 'hsl(var(--chat-background))',
+				'chat-user-bubble': 'hsl(var(--chat-user-bubble))',
+				'chat-user-bubble-foreground': 'hsl(var(--chat-user-bubble-foreground))',
+				'chat-bot-bubble': 'hsl(var(--chat-bot-bubble))',
+				'chat-bot-bubble-foreground': 'hsl(var(--chat-bot-bubble-foreground))',
+				'online-status': 'hsl(var(--online-status))',
 				sidebar: {
 					DEFAULT: 'hsl(var(--sidebar-background))',
 					foreground: 'hsl(var(--sidebar-foreground))',
