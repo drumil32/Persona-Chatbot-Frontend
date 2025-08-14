@@ -71,11 +71,11 @@ export const Chatbot = () => {
   };
 
   return (
-    <div className="min-h-screen bg-chat-background flex items-center justify-center p-4">
-      <Card className="w-full max-w-md h-[600px] flex flex-col shadow-2xl border-border">
+    <div className="min-h-screen bg-gradient-to-br from-chat-background to-chat-background/90 flex items-center justify-center p-4">
+      <Card className="w-full max-w-2xl h-[700px] flex flex-col shadow-2xl border-border/50 backdrop-blur-xl bg-card/95 overflow-hidden">
         <ChatHeader user={user} />
         
-        <div className="flex-1 overflow-y-auto p-4 space-y-2">
+        <div className="flex-1 overflow-y-auto p-6 space-y-2 bg-gradient-to-b from-card/20 to-transparent">
           {messages.map((message) => (
             <MessageBubble key={message.id} message={message} />
           ))}
