@@ -28,11 +28,11 @@ export const AI_MODEL_OPTIONS: AIModelOption[] = [
     label: 'DeepSeek',
     // description: 'DeepSeek AI model'
   },
-  {
-    value: AIModel.CLAUDE,
-    label: 'Claude',
-    // description: 'Anthropic\'s Claude model'
-  },
+  // {
+  //   value: AIModel.CLAUDE,
+  //   label: 'Claude',
+  //   // description: 'Anthropic\'s Claude model'
+  // },
   {
     value: AIModel.GROQ_LLAMA,
     label: 'Groq Llama',
