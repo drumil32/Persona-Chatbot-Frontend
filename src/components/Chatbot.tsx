@@ -49,6 +49,8 @@ export const Chatbot = () => {
   const [selectedModel, setSelectedModel] = useState<AIModel>(AIModel.GEMINI_2_FLASH);
   const [selectedUserId, setSelectedUserId] = useState<string>("1");
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesContainerRef = useRef<HTMLDivElement>(null);
+  const mobileMessagesContainerRef = useRef<HTMLDivElement>(null);
 
   // Get current user's messages
   const messages = chatHistories[selectedUserId] || [];
@@ -61,29 +63,26 @@ export const Chatbot = () => {
   };
 
   const scrollToBottom = (immediate = false) => {
-    if (messagesEndRef.current) {
-      const scrollContainer = messagesEndRef.current.parentElement;
-      if (scrollContainer) {
-        if (immediate) {
-          scrollContainer.scrollTop = scrollContainer.scrollHeight;
-        } else {
-          messagesEndRef.current.scrollIntoView({
-            behavior: "smooth",
-            block: "end",
-            inline: "nearest"
-          });
-        }
+    // Try desktop container first, then mobile container
+    const container = messagesContainerRef.current || mobileMessagesContainerRef.current;
+    if (container) {
+      if (immediate) {
+        container.scrollTop = container.scrollHeight;
+      } else {
+        container.scrollTo({
+          top: container.scrollHeight,
+          behavior: "smooth"
+        });
       }
     }
   };
 
   useEffect(() => {
-    // Use requestAnimationFrame to ensure DOM is updated before scrolling
-    requestAnimationFrame(() => {
-      setTimeout(() => {
-        scrollToBottom();
-      }, 10);
-    });
+    // Simple and reliable scrolling after messages update
+    const timer = setTimeout(() => {
+      scrollToBottom();
+    }, 100);
+    return () => clearTimeout(timer);
   }, [messages, isTyping]);
 
   const handleSendPrompt = (prompt: string) => {
@@ -114,9 +113,7 @@ export const Chatbot = () => {
     setIsTyping(true);
 
     // Ensure scroll to bottom after user message
-    requestAnimationFrame(() => {
-      setTimeout(() => scrollToBottom(), 50);
-    });
+    setTimeout(() => scrollToBottom(), 50);
 
     try {
       const response = await axios.post<ChatApiResponse>(API_ENDPOINTS.CHAT, {
@@ -139,9 +136,7 @@ export const Chatbot = () => {
       }));
 
       // Ensure scroll to bottom after bot response
-      requestAnimationFrame(() => {
-        setTimeout(() => scrollToBottom(), 100);
-      });
+      setTimeout(() => scrollToBottom(), 100);
     } catch (error) {
       console.error('Chat API error:', error);
 
@@ -250,15 +245,11 @@ export const Chatbot = () => {
       }));
 
       // Ensure scroll to bottom after error message
-      requestAnimationFrame(() => {
-        setTimeout(() => scrollToBottom(), 50);
-      });
+      setTimeout(() => scrollToBottom(), 50);
     } finally {
       setIsTyping(false);
       // Final scroll after typing stops
-      requestAnimationFrame(() => {
-        setTimeout(() => scrollToBottom(), 100);
-      });
+      setTimeout(() => scrollToBottom(), 100);
     }
   };
 
@@ -287,7 +278,11 @@ export const Chatbot = () => {
             onModelChange={setSelectedModel}
           />
 
-          <div className={`flex-1 overflow-y-auto p-3 xl:p-4 space-y-2 bg-gradient-to-b ${currentTheme.chatGradient}`}>
+          <div 
+            ref={messagesContainerRef}
+            className={`flex-1 overflow-y-auto p-3 xl:p-4 space-y-2 bg-gradient-to-b ${currentTheme.chatGradient} scroll-smooth custom-scrollbar`}
+            style={{ scrollbarGutter: 'stable' }}
+          >
             {messages.map((message) => (
               <MessageBubble key={message.id} message={message} user={user} />
             ))}
@@ -324,7 +319,11 @@ export const Chatbot = () => {
             onModelChange={setSelectedModel}
           />
 
-          <div className={`flex-1 overflow-y-auto p-2 xl:p-3 space-y-2 bg-gradient-to-b ${currentTheme.chatGradient} min-h-0`}>
+          <div 
+            ref={mobileMessagesContainerRef}
+            className={`flex-1 overflow-y-auto p-2 xl:p-3 space-y-2 bg-gradient-to-b ${currentTheme.chatGradient} min-h-0 scroll-smooth custom-scrollbar`}
+            style={{ scrollbarGutter: 'stable' }}
+          >
             {messages.map((message) => (
               <MessageBubble key={message.id} message={message} user={user} />
             ))}
