@@ -4,7 +4,6 @@ import { ChatHeader } from "./ChatHeader";
 import { MessageBubble } from "./MessageBubble";
 import { TypingIndicator } from "./TypingIndicator";
 import { ChatInput } from "./ChatInput";
-import { PromptSuggestions } from "./PromptSuggestions";
 import { UserList } from "./UserList";
 import { Message, User, ChatApiResponse, ChatApiError } from "@/types/chat";
 import { AIModel } from "@/types/aiModels";
@@ -25,7 +24,7 @@ const INITIAL_CHAT_HISTORIES: Record<string, Message[]> = {
   ],
   "2": [
     {
-      id: "piyush-1", 
+      id: "piyush-1",
       text: "Hello Piyush! I'm your dedicated AI assistant here to support you with any tasks, questions, or projects you need help with. How can I assist you today?",
       isUser: false,
       timestamp: new Date(),
@@ -66,7 +65,7 @@ export const Chatbot = () => {
         if (immediate) {
           scrollContainer.scrollTop = scrollContainer.scrollHeight;
         } else {
-          messagesEndRef.current.scrollIntoView({ 
+          messagesEndRef.current.scrollIntoView({
             behavior: "smooth",
             block: "end",
             inline: "nearest"
@@ -108,10 +107,10 @@ export const Chatbot = () => {
       ...prev,
       [selectedUserId]: [...(prev[selectedUserId] || []), userMessage]
     }));
-    
+
     setInputValue("");
     setIsTyping(true);
-    
+
     // Ensure scroll to bottom after user message
     requestAnimationFrame(() => {
       setTimeout(() => scrollToBottom(), 50);
@@ -123,7 +122,7 @@ export const Chatbot = () => {
         model: selectedModel,
         userName: currentUser?.name || `User ${selectedUserId}`
       });
-      
+
       const botResponse: Message = {
         id: (Date.now() + 1).toString(),
         text: response.data.response,
@@ -136,16 +135,16 @@ export const Chatbot = () => {
         ...prev,
         [selectedUserId]: [...(prev[selectedUserId] || []), botResponse]
       }));
-      
+
       // Ensure scroll to bottom after bot response
       requestAnimationFrame(() => {
         setTimeout(() => scrollToBottom(), 100);
       });
     } catch (error) {
       console.error('Chat API error:', error);
-      
+
       let errorText = 'Sorry, I encountered an unexpected error. Please try again.';
-      
+
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<ChatApiError>;
         if (axiosError.response?.data?.error) {
@@ -158,7 +157,7 @@ export const Chatbot = () => {
           errorText = 'Sorry, there was a server error. Please try again later.';
         }
       }
-      
+
       const errorMessage: Message = {
         id: (Date.now() + 2).toString(),
         text: errorText,
@@ -172,7 +171,7 @@ export const Chatbot = () => {
         ...prev,
         [selectedUserId]: [...(prev[selectedUserId] || []), errorMessage]
       }));
-      
+
       // Ensure scroll to bottom after error message
       requestAnimationFrame(() => {
         setTimeout(() => scrollToBottom(), 50);
@@ -189,23 +188,28 @@ export const Chatbot = () => {
   return (
     <div className={`h-screen bg-gradient-to-br ${currentTheme.mainBg} flex flex-col xl:flex-row xl:items-center xl:justify-center p-2 xl:p-4`}>
       {/* Desktop Layout */}
+
+
       <div className="hidden xl:flex w-full max-w-[100rem] h-full flex-row gap-4">
+
         {/* Left Sidebar - User List */}
         <div className="w-80 h-full max-h-[95vh]">
-          <UserList 
+          <UserList
             selectedUserId={selectedUserId}
             onUserSelect={handleUserSelect}
           />
         </div>
 
-        {/* Main Chat */}
-        <Card className={`flex-1 max-w-4xl h-full max-h-[95vh] flex flex-col shadow-2xl ${currentTheme.cardBorder} backdrop-blur-xl ${currentTheme.cardBg} overflow-hidden`}>
-          <ChatHeader 
-            user={user} 
+        {/* Main Chat - fill remaining space */}
+        <Card
+          className={`flex-1 h-full max-h-[95vh] flex flex-col shadow-2xl ${currentTheme.cardBorder} backdrop-blur-xl ${currentTheme.cardBg} overflow-hidden`}
+        >
+          <ChatHeader
+            user={user}
             selectedModel={selectedModel}
             onModelChange={setSelectedModel}
           />
-          
+
           <div className={`flex-1 overflow-y-auto p-3 xl:p-4 space-y-2 bg-gradient-to-b ${currentTheme.chatGradient}`}>
             {messages.map((message) => (
               <MessageBubble key={message.id} message={message} user={user} />
@@ -214,38 +218,35 @@ export const Chatbot = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          <ChatInput 
-            onSendMessage={handleSendMessage} 
+          <ChatInput
+            onSendMessage={handleSendMessage}
             disabled={isTyping}
             value={inputValue}
             onValueChange={setInputValue}
           />
         </Card>
 
-        {/* Right Sidebar - Prompt Suggestions */}
-        <div className="w-96 h-full max-h-[95vh]">
-          <PromptSuggestions onSendPrompt={handleSendPrompt} />
-        </div>
       </div>
+
 
       {/* Mobile Layout */}
       <div className="xl:hidden flex flex-col w-full h-full gap-2">
         {/* Mobile User List - Horizontal */}
         <div className="flex-shrink-0 h-20">
-          <UserList 
+          <UserList
             selectedUserId={selectedUserId}
             onUserSelect={handleUserSelect}
           />
         </div>
-        
+
         {/* Main Chat - Takes remaining space */}
         <Card className={`flex-1 flex flex-col shadow-2xl ${currentTheme.cardBorder} backdrop-blur-xl ${currentTheme.cardBg} overflow-hidden min-h-0`}>
-          <ChatHeader 
-            user={user} 
+          <ChatHeader
+            user={user}
             selectedModel={selectedModel}
             onModelChange={setSelectedModel}
           />
-          
+
           <div className={`flex-1 overflow-y-auto p-2 xl:p-3 space-y-2 bg-gradient-to-b ${currentTheme.chatGradient} min-h-0`}>
             {messages.map((message) => (
               <MessageBubble key={message.id} message={message} user={user} />
@@ -254,14 +255,14 @@ export const Chatbot = () => {
             <div ref={messagesEndRef} />
           </div>
 
-          <ChatInput 
-            onSendMessage={handleSendMessage} 
+          <ChatInput
+            onSendMessage={handleSendMessage}
             disabled={isTyping}
             value={inputValue}
             onValueChange={setInputValue}
           />
         </Card>
-        
+
       </div>
     </div>
   );
