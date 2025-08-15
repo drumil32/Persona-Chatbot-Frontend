@@ -11,6 +11,8 @@ import { API_ENDPOINTS } from "@/constants/api";
 import { useTheme } from "@/contexts/ThemeContext";
 import { themes } from "@/utils/theme";
 import axios, { AxiosError } from "axios";
+import hiteshImg from "@/assets/Hitesh Choudhary.jpg";
+import piyushImg from "@/assets/Piyush Garg.jpg";
 
 // Chat histories for each user
 const INITIAL_CHAT_HISTORIES: Record<string, Message[]> = {
@@ -34,8 +36,8 @@ const INITIAL_CHAT_HISTORIES: Record<string, Message[]> = {
 
 // User data mapping
 const USER_DATA: Record<string, { name: string; avatar: string }> = {
-  "1": { name: "Hitesh Choudhary", avatar: "/src/assets/Hitesh Choudhary.jpg" },
-  "2": { name: "Piyush Garg", avatar: "/src/assets/Piyush Garg.jpg" }
+  "1": { name: "Hitesh Choudhary", avatar: hiteshImg },
+  "2": { name: "Piyush Garg", avatar: piyushImg }
 };
 
 export const Chatbot = () => {
