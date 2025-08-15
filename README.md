@@ -26,6 +26,10 @@ npm install
 npm run dev
 ```
 
+## 🔗 Backend Repository
+
+[**Backend Repository →**](https://github.com/drumil32/Persona-Chatbot-Backend)
+
 ## 👥 Personas
 
 - **Hitesh Choudhary**: Responds in Hitesh Sir's teaching style and expertise

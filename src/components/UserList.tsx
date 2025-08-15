@@ -23,14 +23,14 @@ const SAMPLE_USERS: UserListUser[] = [
     name: "Hitesh Choudhary",
     avatar: hiteshImg,
     isOnline: true,
-    tagline: "Educator"
+    tagline: "Empowering Future Coders"
   },
   {
     id: "2", 
     name: "Piyush Garg",
     avatar: piyushImg,
     isOnline: true,
-    tagline: "Assistant"
+    tagline: "Transforming Learners into Leaders"
   }
 ];
 
