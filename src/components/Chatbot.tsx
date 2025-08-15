@@ -143,20 +143,95 @@ export const Chatbot = () => {
     } catch (error) {
       console.error('Chat API error:', error);
 
-      let errorText = 'Sorry, I encountered an unexpected error. Please try again.';
+      // Get personalized error messages based on status code and user
+      const getPersonalizedErrorMessage = (statusCode: number | undefined, errorDetails: string, userName: string) => {
+        const userFirstName = userName.split(' ')[0];
+        
+        switch (selectedUserId) {
+          case "1": // Hitesh Choudhary
+            switch (statusCode) {
+              case 400:
+                return `Arre bhai! 🤦‍♂️ Ye kya bhej diya tumne? Format ka bhel puri bana diya! Thoda request check karo, fir bhejo. #chaiaurcode`;
+            case 401:
+                return `Oho bhai! 😏 Authentication ka password bhool gaye kya? Refresh maaro, login karo, aur fir code chalao.`;
+            case 403:
+                return `Dekho bhai, 🚫 yeh gatekeepers ne rok diya tumhe. Access nahi mil raha. Support wale ko knock knock karo.`;
+            case 404:
+                return `Bhai, jo dhoondh rahe ho wo toh Bermuda Triangle me chala gaya 😅. Resource hi nahi mila!`;
+            case 429:
+                return `Arre bhai! 🏃‍♂️ Thoda slow ho jao, Usain Bolt banne ki zarurat nahi. Requests dheere bhejo, server bhi insaan hai.`;
+            case 500:
+                return `Oho bhai! 💥 Server bol raha hai "Bas bhai, ab aur load nahi". Thodi der chai piyo, fir try karo.`;
+            case 502:
+                return `Bhai ☕, yeh toh pura bad gateway ka masala ho gaya. Team kaam pe lagi hai, tension nahi lene ka.`;
+            case 503:
+                return `bhai! 🛠 Service thodi break pe hai. Jitne me repair ho, ek cutting chai le lo.`;
+            default:
+                return `Bhai, kuch toh gadbad hai 😅. Error: ${errorDetails}. Chinta mat karo, fix ho jayega.`;            
+            }
+          case "2": // Piyush Garg  
+            switch (statusCode) {
+              case 400:
+                return `Hey ${userFirstName}! There's something wrong with the request format. Can you double-check your message and try again?`;
+              case 401:
+                return `Hi ${userFirstName}! Authentication problem detected. Try refreshing the page and we'll get you back on track.`;
+              case 403:
+                return `Sorry ${userFirstName}! Access denied for this request. If this keeps happening, let's contact support together.`;
+              case 404:
+                return `Oops ${userFirstName}! Couldn't find what we're looking for. This might be temporary - let's try again in a bit.`;
+              case 429:
+                return `Slow down there ${userFirstName}! You're sending messages too fast. Take a quick breather and try again.`;
+              case 500:
+                return `Uh oh ${userFirstName}! Server ran into an internal error. Give it a few minutes and let's try again.`;
+              case 502:
+                return `Technical hiccup ${userFirstName}! Bad gateway error. The tech team is probably on it already.`;
+              case 503:
+                return `Service is taking a break ${userFirstName}! Try again in a moment - we'll get this sorted.`;
+              default:
+                return `Sorry ${userFirstName}! Ran into a technical issue: ${errorDetails}. I'm here to help once this gets sorted out.`;
+            }
+          default:
+            switch (statusCode) {
+              case 400:
+                return `Sorry ${userFirstName}! Invalid request format. Please try again.`;
+              case 401:
+                return `Sorry ${userFirstName}! Authentication required. Please refresh and try again.`;
+              case 403:
+                return `Sorry ${userFirstName}! Access forbidden. Contact support if needed.`;
+              case 404:
+                return `Sorry ${userFirstName}! Resource not found. Try again later.`;
+              case 429:
+                return `Sorry ${userFirstName}! Too many requests. Please wait a moment.`;
+              case 500:
+                return `Sorry ${userFirstName}! Server error occurred. Try again later.`;
+              case 502:
+                return `Sorry ${userFirstName}! Bad gateway error. Technical issue detected.`;
+              case 503:
+                return `Sorry ${userFirstName}! Service unavailable. Try again shortly.`;
+              default:
+                return `Sorry ${userFirstName}! ${errorDetails}`;
+            }
+        }
+      };
+      
+      let statusCode: number | undefined;
+      let baseErrorText = 'I encountered an unexpected error. Please try again.';
 
       if (axios.isAxiosError(error)) {
         const axiosError = error as AxiosError<ChatApiError>;
+        statusCode = axiosError.response?.status;
+        
         if (axiosError.response?.data?.error) {
-          errorText = `Sorry, I encountered an error: ${axiosError.response.data.error}`;
+          baseErrorText = axiosError.response.data.error;
         } else if (axiosError.code === 'ECONNREFUSED') {
-          errorText = 'Sorry, I cannot connect to the server. Please ensure the backend is running.';
-        } else if (axiosError.response?.status === 400) {
-          errorText = 'Sorry, your message appears to be invalid. Please try again.';
-        } else if (axiosError.response?.status === 500) {
-          errorText = 'Sorry, there was a server error. Please try again later.';
+          baseErrorText = 'Cannot connect to server. Please ensure backend is running.';
+          statusCode = undefined; // Connection error, no status code
+        } else {
+          baseErrorText = axiosError.message || 'Network error occurred.';
         }
       }
+      
+      const errorText = getPersonalizedErrorMessage(statusCode, baseErrorText, currentUser?.name || 'User');
 
       const errorMessage: Message = {
         id: (Date.now() + 2).toString(),

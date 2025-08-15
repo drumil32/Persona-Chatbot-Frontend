@@ -3,6 +3,8 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User } from "@/types/chat";
 import { useTheme } from "@/contexts/ThemeContext";
 import { themes } from "@/utils/theme";
+import hiteshImg from "@/assets/Hitesh Choudhary.jpg";
+import piyushImg from "@/assets/Piyush Garg.jpg";
 
 interface UserListUser extends User {
   tagline: string;
@@ -19,14 +21,14 @@ const SAMPLE_USERS: UserListUser[] = [
   {
     id: "1",
     name: "Hitesh Choudhary",
-    avatar: "/src/assets/Hitesh Choudhary.jpg",
+    avatar: hiteshImg,
     isOnline: true,
     tagline: "Educator"
   },
   {
     id: "2", 
     name: "Piyush Garg",
-    avatar: "/src/assets/Piyush Garg.jpg",
+    avatar: piyushImg,
     isOnline: true,
     tagline: "Assistant"
   }
