@@ -1,71 +1,48 @@
-# Personna Frontend
+# AI Persona Chatbot
 
-## Project info
+An AI-powered chatbot that mimics the personas of **Hitesh Choudhary** and **Piyush Garg**. Chat with AI versions of these popular tech educators and get responses in their unique teaching styles.
 
-A React-based AI chatbot interface with multiple user personas and AI model support.
+## 🌐 Live Demo
 
-## How can I edit this code?
+[**Try it now →**](https://persona.ai.sprintup.in/)
 
-There are several ways of editing your application.
+## ✨ Features
 
-**Use your preferred IDE**
+- 🤖 **Dual Personas**: Chat with AI versions of Hitesh Choudhary and Piyush Garg
+- 📱 **Fully Responsive**: Works seamlessly on desktop, tablet, and mobile
+- 🧠 **Multiple AI Models**: Supports various OpenAI models for different response styles
+- ⚡ **Real-time Chat**: Instant responses with smooth chat interface
 
-If you want to work locally using your own IDE, you can clone this repo and push changes.
+## 🛠️ Tech Stack
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+- **Vite** + **TypeScript** + **Tailwind CSS**
+- **Package Manager**: npm
+- **Hosting**: AWS Amplify
 
-Follow these steps:
+## 🚀 Quick Start
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+```bash
+npm install
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+## 👥 Personas
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+- **Hitesh Choudhary**: Responds in Hitesh Sir's teaching style and expertise
+- **Piyush Garg**: Mimics Piyush Sir's approach to explaining concepts
 
-**Use GitHub Codespaces**
+## 🤝 Contributing
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+1. Fork the repository
+2. Create your feature branch
+3. Commit your changes
+4. Push to the branch
+5. Open a Pull Request
 
-## What technologies are used for this project?
+## 👤 Author
 
-This project is built with:
+**drumil32** - [GitHub](https://github.com/drumil32)
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+---
 
-## How can I deploy this project?
-
-You can deploy this project using any static hosting service like:
-
-- Vercel
-- Netlify
-- GitHub Pages
-- AWS S3 + CloudFront
-
-Build the project first:
-```sh
-npm run build
-```
-
-Then deploy the `dist` folder to your hosting service.
+*Experience personalized tech education with AI personas of your favorite instructors!*
