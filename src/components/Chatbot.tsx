@@ -17,7 +17,7 @@ const INITIAL_CHAT_HISTORIES: Record<string, Message[]> = {
   "1": [
     {
       id: "hitesh-1",
-      text: "Namaste Hitesh Sir! 🙏 I'm your AI assistant ready to help with course creation, content development, teaching strategies, or any educational queries. What would you like to work on today?",
+      text: "Hello dost, swagat hai aapka! Chalo shuru karte hain.",
       isUser: false,
       timestamp: new Date(),
     }
@@ -25,7 +25,7 @@ const INITIAL_CHAT_HISTORIES: Record<string, Message[]> = {
   "2": [
     {
       id: "piyush-1",
-      text: "Hello Piyush! I'm your dedicated AI assistant here to support you with any tasks, questions, or projects you need help with. How can I assist you today?",
+      text: "Hello, friend! Welcome to another exciting conversation.",
       isUser: false,
       timestamp: new Date(),
     }
